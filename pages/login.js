@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import HeaderAuth from '../components/auth/HeaderAuth';
+import 'tailwindcss/tailwind.css'
 
 const Login = () => {
     return (

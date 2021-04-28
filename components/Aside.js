@@ -1,67 +1,61 @@
-import React from 'react'
-import '../styles/Home.module.css';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import mapboxgl from 'mapbox-gl';
 
-const Aside = () => {
 
-    const vehiculos = [
-        {
-            id: '1',
-            nombre: 'El yancarlo',
-            velocidad: 102,
-            gas: 78,
-            position:[19.1116989403268, -104.33749967811606]
-        },
-        {
-            id: '2',
-            nombre: 'El marlo',
-            velocidad: 100,
-            gas: 90,
-            position:[19.116281175498628, -104.34418897036272]  
-        },
-        {
-            id: '3',
-            nombre: 'El guacamayo',
-            velocidad: 57,
-            gas: 99,
-            position:[19.16196721894028, -104.26546007223101]
-        },
-        {
-            id: '4',
-            nombre: 'El romo',
-            velocidad: 120,
-            gas: 54,
-            position:[19.1116989403268, -104.33749967811606]
-        },
-        {
-            id: '5',
-            nombre: 'El marinero',
-            velocidad: 90,
-            gas: 24,
-            position:[19.218935713013078, -104.23599203012205] 
-        },
-    ]
 
+const Aside = ({vehiculos,mapa}) => {
+
+ 
+
+
+    useEffect(()=>{
+        vehiculos.map((vehiculo)=>{
+            let popup = new mapboxgl.Popup({ className: 'popup'}).setLngLat(vehiculo.position)
+                        .setHTML(`<h1>${vehiculo.nombre}</h1>`)
+                        .setMaxWidth("300px").addTo(mapa);
+            let marcador = new mapboxgl.Marker().setLngLat(vehiculo.position).setPopup(popup).addTo(mapa); 
+        })
+    },[vehiculos])
+
+    const volarAPosition = ( position )=>{
+        mapa.flyTo({
+            center: position,
+            essential: true
+        })
+    } 
+
+    const handleColorGas = (levelGas)=>{
+        if(levelGas < 75 && levelGas > 35){
+            return 'text-yellow-500';
+        }else if(levelGas <= 35){
+            return 'text-red-500';
+        }else {
+            return 'text-green-500';
+        }
+    }
 
     return (  
-        <div id='aside' className='w-3/12 h-screen bg-black opacity-90 text-white text-center  md:w-4/12 sm:w-3/12 lg:w-3/12 xl:w-2/12'>
-            <h1 className='pt-2 text-lg pb-2'>Tu Flotilla</h1>
-            <div className='w-full h-full '>
-                <div className='flex w-full font-bold'>
-                    <div className='w-7/12 '>Nombre</div>
-                    <div className='w-3/12'>Velocidad</div>
-                    <div className='w-2/12'>Gas</div>
-                </div>
-                {
-                    vehiculos.map(( vehiculo )=>{
-                        return (
-                            <div className='flex w-full hover:bg-gray-800 cursor-pointer' key={vehiculo.id}>
-                                <div className='w-7/12 '>{vehiculo.nombre}</div>
-                                <div className='w-3/12'>{vehiculo.velocidad} Km/h</div>
-                                <div className='w-2/12'>{vehiculo.gas} %</div>
-                            </div>
-                        )
-                    })
-                }
+        <div className='h-full aside text-white min-w-min relative'>
+            <h1 className='w-full p-3 text-center  text-lg'>Tu Flotilla</h1>
+            <div className='flex text-center font-bold w-full'>
+                <div className='w-5/12 font-black border-r-2 border-b-2 text-center'>Vehiculo</div>
+                <div className='w-4/12 font-black border-r-2 border-b-2 text-center'>Velocidad</div>
+                <div className='w-3/12 font-black border-b-2 text-center'>Gas</div>
+            </div>
+            {
+                vehiculos.map(( vehiculo)=>(
+                    <div key={vehiculos.gas} className='flex text-center font-semibold hover:bg-gray-700 cursor-pointer'>
+                        <div className='w-5/12' onClick={()=>{volarAPosition(vehiculo.position)}}>{vehiculo.nombre}</div>
+                        <div className='w-4/12'>{vehiculo.velocidad}</div>
+                        <div className={`${ handleColorGas(vehiculo.levelGas) } w-3/12`}>{vehiculo.levelGas}%</div>
+                    </div>
+                ))
+            }
+            <div className='absolute bottom-5 text-center  w-full '>
+                <button className='w-50 bg-blue-600 px-2 py-2  rounded-md hover:bg-blue-700'>
+                    Agregar Nuevo Vehiculo 
+                </button>
             </div>
         </div>
     );

@@ -1,23 +1,20 @@
 import React from 'react'
-import '../styles/Home.module.css';
+
+
 
 const Header = () => {
-    return (  
-        <div className='bg-black opacity-80 text-white flex z-10 relative p-1 w-full shadow-md'>
-            <div className='text-xl  pl-4 w-4/12 flex flex-col items-start md:text-md  sm:min-w-max cursor-pointer'>
-                <h2 className='text-red-500 font-black'> DEV<span className='text-white font-black'>-TECH GPS Tracking System</span></h2>
-                <h2>"Desarrollando Tecnologia"</h2>
-            </div>
-            <div className='w-6/12 px-2  flex text-xl justify-center items-center font-bold md:text-md sm:min-w-max'>
-                Transportes Mendoza S.A. de C.V.
-            </div>
-            <div className='w-2/12 flex flex-col items-end pr-6  justify-center text-md sm:min-w-max'>
-                <p className='py-2 px-2 '>Hola, <span className='font-black'> Jesus Eng</span></p>
-                <button className='px-2 hover:text-white font-black'>
+    return ( 
+        <div className='w-full h-11  bg-blue-500 p-2 text-white text-xl font-bold flex items-center justify-between'>
+            <h1 className='text-xl w-2/12'>DEV<span className='text-red-400'>-TECH</span></h1> 
+            <div className='w-5/12 flex justify-end pr-2'>
+                <p className=' min-w-min text-black text-md pr-4 font-bold flex items-center'>Bienvenido, <span className='text-white font-bold'>Jesus Eng</span></p>
+                <button className='border rounded-md  hover:bg-red-600 hover:border-red-600 p-1'>
                     Cerrar Sesion
                 </button>
-            </div>
+            </div> 
+            
         </div>
     );
 }
+ 
 export default Header;

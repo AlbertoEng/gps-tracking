@@ -1,0 +1,28 @@
+{
+    "vehiculos": [
+        {
+            "nombre": "el marinero 1",
+            "velocidad": "89 km/h",
+            "levelGas" : "98",
+            "position" : [-104.34797062270904,19.112510111731996]
+        },
+        {
+            "nombre": "el gran marlo",
+            "velocidad": "67km/h",
+            "levelGas" : "56",
+            "position" : [-104.34415235485835,19.11626711738413]
+        },
+        {
+            "nombre": "el docker",
+            "velocidad": "87 km/h",
+            "levelGas" : "98",
+            "position" : [-104.3086171692607,19.109914791737342]   
+        },
+        {
+            "nombre": "el javascript",
+            "velocidad": "89 km/h",
+            "levelGas" : "33",
+            "position" : [-104.35099272026963,19.09828370203469] 
+        }
+    ]
+}

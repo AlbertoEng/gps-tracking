@@ -1,49 +1,40 @@
-import React,{ useEffect} from 'react'
+import React,{ useEffect, useState} from 'react'
+import axios from 'axios'
 import Head from 'next/head';
-
+import Header from '../components/Header';
+import Aside from './Aside'
+import Section from './Section';
+import Mapa from '../classes/Mapa';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 
-
-
 const Layout = ({children}) => {
 
+    const [vehiculos, setVehiculos] = useState([]);
+    const [mapa, setMapa] = useState(null)
 
-    
-    useEffect(()=>{
-        mapboxgl.accessToken = 'pk.eyJ1IjoiYWxiZXJ0b2VuZzA4IiwiYSI6ImNrNmVsZTU1aDF5cjMzZnFqMjR4YTVmOWMifQ.InAhlSX15h0QQI-ZBguwLg';
-            const map = new mapboxgl.Map({
-                container: 'map', // container ID
-                style: 'mapbox://styles/mapbox/streets-v11', // style URL
-                center: [ -104.34426223239404,19.116391282496753], // starting position [lng, lat] 19.116391282496753, -104.34426223239404
-                zoom: 15 // starting zoom
-            });
+    const reqVehiculos = async ()=>{
+        const resp = await axios.get('http://localhost:3004/vehiculos');
+        setVehiculos(resp.data);
+    }
 
-            map.on('click', (e)=>{
-                let coordenadasMarcador = Object.values(e.lngLat);
-                let marcador = new mapboxgl.Marker()
-                    .setLngLat(coordenadasMarcador)
-                    .setPopup(new mapboxgl.Popup().setHTML(`<h1>MArcador</h1>`)) // add popup
-                    .addTo(map);
-                console.log(marcador.getLngLat())
-                console.log(coordenadasMarcador)
-            })  
-    },[])
 
-    
-
+    useEffect(() => {
+        reqVehiculos();
+        const newMap = new Mapa('map', 'mapbox://styles/mapbox/dark-v10',[-104.34797062270904,19.112510111731996]);
+        setMapa(newMap);
+    }, [])
 
     return (  
-        <>
-        <Head>
-            <title>GPS - DEVTECH</title>
-        </Head>
-        <div id='map' className='h-screen w-full relative'>
-            {children}
+        <div className='h-screen flex flex-col'>
+            <Header />
+            <div className='h-full w-full flex'>
+                <Aside vehiculos={vehiculos} mapa={mapa} />
+                <Section/>
+            </div>
         </div>
-        </>
-    );
+    )
 }
  
 export default Layout;

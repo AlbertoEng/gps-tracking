@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
-import HeaderAuth from '../components/auth/HeaderAuth'
+import HeaderAuth from '../components/auth/HeaderAuth';
+import 'tailwindcss/tailwind.css'
 
 const Signup = () => {
     return (
@@ -36,7 +37,7 @@ const Signup = () => {
                         <div className='py-1 px-4'>
                             <button type='button' className='bg-blue-500 p-3 my-4 w-full rounded font-bold text-white leading-tight hover:bg-blue-600'>Registrar Nueva Cuenta</button>
                         </div>
-                        <p className='text-white font-bold text-center'>Ya tienes Cuenta? <span className='text-blue-500 cursor-pointer'><Link href='/login'><a>Inicia Sesion</a></Link></span></p>
+                        <p className='text-white font-bold text-center'>Ya tienes Cuenta? <span className='text-blue-500 cursor-pointer'><Link href='/login'><a className='font-bold'>Inicia Sesion</a></Link></span></p>
                     </form>
                 </div>
             </div>
