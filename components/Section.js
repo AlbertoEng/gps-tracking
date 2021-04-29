@@ -5,8 +5,8 @@ import axios from 'axios';
 const Section = () => {
 
     return (  
-        <div id='map' className=' section h-full'>
-            
+        <div id='map' className='bg-blue-100 section h-full'>
+
         </div>  
     );
 }

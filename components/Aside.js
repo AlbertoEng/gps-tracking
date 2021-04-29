@@ -6,16 +6,37 @@ import mapboxgl from 'mapbox-gl';
 
 const Aside = ({vehiculos,mapa}) => {
 
- 
-
-
     useEffect(()=>{
+        let geojson = {
+            type: 'FeatureCollection',
+            features : vehiculos.map(( vehiculo)=>{
+                return {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Point',
+                        'coordinates': vehiculo.position
+                    },
+                    'properties': {
+                        'title': 'DEV-TECH',
+                        'description': vehiculo.nombre
+                    }
+                }
+            })
+        }
+
+        
+
         vehiculos.map((vehiculo)=>{
             let popup = new mapboxgl.Popup({ className: 'popup'}).setLngLat(vehiculo.position)
                         .setHTML(`<h1>${vehiculo.nombre}</h1>`)
                         .setMaxWidth("300px").addTo(mapa);
             let marcador = new mapboxgl.Marker().setLngLat(vehiculo.position).setPopup(popup).addTo(mapa); 
         })
+
+        
+
+             
+
     },[vehiculos])
 
     const volarAPosition = ( position )=>{
@@ -25,8 +46,13 @@ const Aside = ({vehiculos,mapa}) => {
         })
     } 
 
+    
+        
+
+    
+
     const handleColorGas = (levelGas)=>{
-        if(levelGas < 75 && levelGas > 35){
+        if(levelGas < 50 && levelGas > 35){
             return 'text-yellow-500';
         }else if(levelGas <= 35){
             return 'text-red-500';
