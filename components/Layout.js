@@ -8,28 +8,33 @@ import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 
+mapboxgl.accessToken = 'pk.eyJ1IjoiYWxiZXJ0b2VuZzA4IiwiYSI6ImNrNmVsZTU1aDF5cjMzZnFqMjR4YTVmOWMifQ.InAhlSX15h0QQI-ZBguwLg';
+
 const Layout = ({children}) => {
 
     const [vehiculos, setVehiculos] = useState([]);
     const [mapa, setMapa] = useState(null)
+    const [temaMapa, setTemaMapa] = useState('mapbox://styles/mapbox/satellite-streets-v11');
 
     const reqVehiculos = async ()=>{
         const resp = await axios.get('http://localhost:3004/vehiculos');
         setVehiculos(resp.data);
     }
 
-
     useEffect(() => {
         reqVehiculos();
-        mapboxgl.accessToken = 'pk.eyJ1IjoiYWxiZXJ0b2VuZzA4IiwiYSI6ImNrNmVsZTU1aDF5cjMzZnFqMjR4YTVmOWMifQ.InAhlSX15h0QQI-ZBguwLg';
         const newMap =  new mapboxgl.Map({
             container: 'map', // container id 'map'
-            style: 'mapbox://styles/mapbox/dark-v10', // style URL  'mapbox://styles/mapbox/streets-v11'
-            center: [-104.34797062270904,19.112510111731996], // starting position [lng, lat]
+            style: temaMapa, // style URL  'mapbox://styles/mapbox/streets-v11'
+            center:  [-104.34797062270904,19.112510111731996], // starting position [lng, lat]
             zoom: 15// starting zoom
         });
-        setMapa(newMap);
-    }, [])
+        setMapa(newMap)
+    }, [temaMapa])
+
+
+    
+
 
     return (  
         <>
@@ -40,7 +45,7 @@ const Layout = ({children}) => {
             <Header />
             <div className='h-full w-full flex'>
                 <Aside vehiculos={vehiculos} mapa={mapa} />
-                <Section/>
+                <Section vehiculos={vehiculos} mapa={mapa} setTemaMapa={setTemaMapa} />
             </div>
         </div>
         </>

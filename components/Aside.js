@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 
 
 
 const Aside = ({vehiculos,mapa}) => {
 
+
     useEffect(()=>{
+
         let geojson = {
             type: 'FeatureCollection',
             features : vehiculos.map(( vehiculo)=>{
@@ -22,21 +23,8 @@ const Aside = ({vehiculos,mapa}) => {
                     }
                 }
             })
-        }
-
+        }    
         
-
-        vehiculos.map((vehiculo)=>{
-            let popup = new mapboxgl.Popup({ className: 'popup'}).setLngLat(vehiculo.position)
-                        .setHTML(`<h1>${vehiculo.nombre}</h1>`)
-                        .setMaxWidth("300px").addTo(mapa);
-            let marcador = new mapboxgl.Marker().setLngLat(vehiculo.position).setPopup(popup).addTo(mapa); 
-        })
-
-        
-
-             
-
     },[vehiculos])
 
     const volarAPosition = ( position )=>{
@@ -46,10 +34,6 @@ const Aside = ({vehiculos,mapa}) => {
         })
     } 
 
-    
-        
-
-    
 
     const handleColorGas = (levelGas)=>{
         if(levelGas < 50 && levelGas > 35){
